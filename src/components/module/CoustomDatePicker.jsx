@@ -8,7 +8,7 @@ function CoustomDatePicker({profileData , setProfileData}) {
    setProfileData({...profileData , constructionDate : date})
   }
   return (
-    <div className={style.contaienr}>
+    <div className={style.container}>
         <p>تاریخ ساخت</p>
         <DatePicker calendar={persian} locale={persian_fa} calendarPosition='buttom-right' value={profileData.constructionDate} onChange={changeHandler}/>
     </div>
