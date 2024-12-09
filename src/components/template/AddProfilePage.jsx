@@ -5,8 +5,9 @@ import TextInput from "@/module/TextInput";
 import RadioList from "@/module/RadioList";
 import TextList from "@/module/TextList";
 import CoustomDatePicker from "@/module/CoustomDatePicker";
-import toast from "react-hot-toast";
-import { ThreeDots } from "react-loader-spinner";
+import toast, { Toaster } from "react-hot-toast";
+import Loading from "@/module/Loading";
+import CustomDatePicker from "@/module/CoustomDatePicker";
 
 function AddProfilePage() {
   const [profileData, setProfileData] = useState({
@@ -22,6 +23,7 @@ function AddProfilePage() {
     amenities: [],
   });
   const [loaging, setLoading] = useState(false);
+
   const submitHandler = async () => {
     setLoading(true);
     const res = await fetch("/api/profile", {
@@ -41,62 +43,64 @@ function AddProfilePage() {
     <div className={style.container}>
       <h3>ثبت آگهی</h3>
       <TextInput
-        title={"عنوان آگهی"}
-        name={"title"}
-        profileData={profileData}
-        setProfileData={setProfileData}
-      />
-
-      <TextInput
-        title={"توضیحات"}
-        name={"description"}
+        title="عنوان آگهی"
+        name="title"
         profileData={profileData}
         setProfileData={setProfileData}
       />
       <TextInput
-        title={"آدرس"}
-        name={"location"}
+        title="توضیحات"
+        name="description"
+        profileData={profileData}
+        setProfileData={setProfileData}
+        textarea={true}
+      />
+      <TextInput
+        title="آدرس"
+        name="location"
         profileData={profileData}
         setProfileData={setProfileData}
       />
       <TextInput
-        title={"شماره تماس"}
-        name={"phone"}
+        title="شماره تماس"
+        name="phone"
         profileData={profileData}
         setProfileData={setProfileData}
       />
       <TextInput
-        title={"قیمت (تومان)"}
-        name={"price"}
+        title="قیمت(تومان)"
+        name="price"
         profileData={profileData}
         setProfileData={setProfileData}
       />
       <TextInput
-        title={"بنگاه"}
-        name={"realState"}
+        title="بنگاه"
+        name="realState"
         profileData={profileData}
         setProfileData={setProfileData}
       />
-      <RadioList setProfileData={setProfileData} profileData={profileData} />
-
+      <RadioList profileData={profileData} setProfileData={setProfileData} />
       <TextList
-        title={"امکانات رفاهی"}
-        type={"amenities"}
+        title="امکانات رفاهی"
         profileData={profileData}
         setProfileData={setProfileData}
+        type="amenities"
       />
       <TextList
-        title={"قوانین"}
-        type={"rules"}
+        title="قوانین"
+        profileData={profileData}
+        setProfileData={setProfileData}
+        type="rules"
+      />
+      <CustomDatePicker
         profileData={profileData}
         setProfileData={setProfileData}
       />
-      <CoustomDatePicker
-        profileData={profileData}
-        setProfileData={setProfileData}
-      />
+      {/* 350===========> */}
+     
+      <Toaster />
       {loaging ? (
-        <ThreeDots color="#304ffe" ariaLabel="three-dots-loading" visible={true} wrapperStyle={{margin:"auto"}} height={45}/>
+        <Loading />
       ) : (
         <button className={style.submit} onClick={submitHandler}>
           ثبت آگهی
