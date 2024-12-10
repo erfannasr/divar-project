@@ -96,7 +96,6 @@ function AddProfilePage() {
         profileData={profileData}
         setProfileData={setProfileData}
       />
-      {/* 350===========> */}
      
       <Toaster />
       {loaging ? (
