@@ -10,7 +10,6 @@ export async function DELETE(req, context) {
 
     try {
 
-        console.log(context, "گرفتم")
         await connectDB()
         const id = context.params.profileId
 

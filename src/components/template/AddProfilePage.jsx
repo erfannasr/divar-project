@@ -1,15 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "./AddProfilePage.module.css";
 import TextInput from "@/module/TextInput";
 import RadioList from "@/module/RadioList";
 import TextList from "@/module/TextList";
-import CoustomDatePicker from "@/module/CoustomDatePicker";
 import toast, { Toaster } from "react-hot-toast";
 import Loading from "@/module/Loading";
 import CustomDatePicker from "@/module/CoustomDatePicker";
+import { useRouter } from "next/navigation";
 
-function AddProfilePage() {
+function AddProfilePage({ data }) {
   const [profileData, setProfileData] = useState({
     title: "",
     description: "",
@@ -24,6 +24,14 @@ function AddProfilePage() {
   });
   const [loaging, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (data) {
+      setProfileData(data);
+    }
+  }, []);
+
+  const router = useRouter();
+
   const submitHandler = async () => {
     setLoading(true);
     const res = await fetch("/api/profile", {
@@ -37,11 +45,28 @@ function AddProfilePage() {
       toast.error(data.error);
     } else {
       toast.success(data.message);
+      router.refresh();
+    }
+    // 357  6:27
+  };
+  const editHandler = async () => {
+    setLoading(true);
+    const res = await fetch("/api/profile", {
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(profileData),
+      method: "PATCH",
+    });
+    const data = await res.json();
+    setLoading(false);
+    if (data.error) {
+      toast.error(data.error);
+    } else {
+      toast.success(data.message);
     }
   };
   return (
     <div className={style.container}>
-      <h3>ثبت آگهی</h3>
+      <h3>{data ? "ویرایش اگهی" : "ثبت آگهی"}</h3>
       <TextInput
         title="عنوان آگهی"
         name="title"
@@ -96,10 +121,14 @@ function AddProfilePage() {
         profileData={profileData}
         setProfileData={setProfileData}
       />
-     
+
       <Toaster />
       {loaging ? (
         <Loading />
+      ) : data ? (
+        <button className={style.submit} onClick={editHandler}>
+          ویرایش آگهی
+        </button>
       ) : (
         <button className={style.submit} onClick={submitHandler}>
           ثبت آگهی

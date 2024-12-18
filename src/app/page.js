@@ -1,6 +1,9 @@
+import HomePage from "@/template/HomePage";
 
 export default function Home() {
   return (
-   <div>Home Page</div>
+   <div>
+    <HomePage />
+   </div>
   );
 }
