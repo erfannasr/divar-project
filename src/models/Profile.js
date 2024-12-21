@@ -1,11 +1,11 @@
 import { Schema, model, models } from "mongoose";
 const profileSchema = new Schema({
     title: {
-       type: String,
+        type: String,
         required: true
     },
     description: {
-       type: String,
+        type: String,
 
         required: true
     },
@@ -17,39 +17,44 @@ const profileSchema = new Schema({
         type: String,
         required: true
     },
-    realState:{
-        type:String,
-        required:true
+    realState: {
+        type: String,
+        required: true
     },
-    price:{
-        type:Number,
-        required:true
+    price: {
+        type: Number,
+        required: true
     },
-    constructionDate:{
-        type:Date,
-        required:true
+    constructionDate: {
+        type: Date,
+        required: true
     },
-    category:{
-        type:String,
-        enum:["villa","apartments" , "store" , "office"],
-        required:true
+    category: {
+        type: String,
+        enum: ["villa", "apartments", "store", "office"],
+        required: true
     },
     amenities: {
-        type:[String],
-        default:[],
+        type: [String],
+        default: [],
     },
     rules: {
-        type:[String],
-        default:[],
+        type: [String],
+        default: [],
     },
-    userId:{type:Schema.Types.ObjectId,
-     ref:"User"
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: "User"
     },
+    published: {
+        type: Boolean,
+        default: false
+    }
 
 },
-{timestamps:true}
+    { timestamps: true }
 
 )
 
-const Profile =  models.Profile || model("Profile" , profileSchema)
+const Profile = models.Profile || model("Profile", profileSchema)
 export default Profile 

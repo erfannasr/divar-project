@@ -3,9 +3,12 @@ import  styles  from "./CategoryCard.module.css";
 import Image from "next/image";
 
 function CategoryCard({ name, title }) {
+  console.log(name , " name")
+  console.log(title , " title")
+  
   return (
     <div className={styles.card}>
-      <Link href={"/"}>
+      <Link href={`/buy-residential?category=${name}`} >
         <Image
           src={`/images/${name}.png`}
           priority={true}
